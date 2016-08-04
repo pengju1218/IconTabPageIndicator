@@ -30,6 +30,9 @@ public class IconTabPageIndicator extends LinearLayout implements PageIndicator 
      */
     private static final CharSequence EMPTY_TITLE = "";
 
+
+    private int iconWidth,iconHeight,iconPadding;
+
     /**
      * Interface for a callback when the selected tab has been reselected.
      */
@@ -67,18 +70,36 @@ public class IconTabPageIndicator extends LinearLayout implements PageIndicator 
 
     private int mTabWidth;
 
-    public IconTabPageIndicator(Context context) {
-        this(context, null);
+   public IconTabPageIndicator(Context context) {
+        this(context, null, R.attr.tabView);
     }
 
     public IconTabPageIndicator(Context context, AttributeSet attrs) {
         super(context, attrs);
         setHorizontalScrollBarEnabled(false);
-
         mTabLayout = new LinearLayout(context, null);
+        TypedArray a =    context.obtainStyledAttributes(attrs,R.styleable.TabView);
+        iconWidth = a.getDimensionPixelSize(R.styleable.TabView_iconWidth, 0);
+        iconHeight = a.getDimensionPixelSize(R.styleable.TabView_iconHeight, 0);
+        iconPadding = a.getDimensionPixelSize(R.styleable.TabView_iconPadding, 0);
+        a.recycle();
         addView(mTabLayout, new ViewGroup.LayoutParams(MATCH_PARENT, MATCH_PARENT));
+
     }
 
+
+    public IconTabPageIndicator(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.TabView, defStyleAttr, 0);
+        iconWidth = a.getDimensionPixelSize(R.styleable.TabView_iconWidth, 0);
+        iconHeight = a.getDimensionPixelSize(R.styleable.TabView_iconHeight, 0);
+        iconPadding = a.getDimensionPixelSize(R.styleable.TabView_iconPadding, 0);
+        a.recycle();
+        setHorizontalScrollBarEnabled(false);
+        mTabLayout = new LinearLayout(context, null);
+        addView(mTabLayout, new ViewGroup.LayoutParams(MATCH_PARENT, MATCH_PARENT));
+
+    }
     public void setOnTabReselectedListener(OnTabReselectedListener listener) {
         mTabReselectedListener = listener;
     }
@@ -87,9 +108,7 @@ public class IconTabPageIndicator extends LinearLayout implements PageIndicator 
     public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         final int widthMode = MeasureSpec.getMode(widthMeasureSpec);
         final boolean lockedExpanded = widthMode == MeasureSpec.EXACTLY;
-
         final int childCount = mTabLayout.getChildCount();
-
         if (childCount > 1 && (widthMode == MeasureSpec.EXACTLY || widthMode == MeasureSpec.AT_MOST)) {
             mTabWidth = MeasureSpec.getSize(widthMeasureSpec) / childCount;
         } else {
@@ -142,6 +161,9 @@ public class IconTabPageIndicator extends LinearLayout implements PageIndicator 
         tabView.mIndex = index;
         tabView.setOnClickListener(mTabClickListener);
         tabView.setText(text);
+        tabView.setIconHeight(iconHeight);
+        tabView.setIconWidth(iconWidth);
+        tabView.setIconPadding(iconPadding);
 
         if (iconResId > 0) {
             tabView.setIcon(iconResId);
@@ -253,9 +275,22 @@ public class IconTabPageIndicator extends LinearLayout implements PageIndicator 
 
         private int iconWidth;
         private int iconHeight;
+        private int iconPadding;
 
         public TabView(Context context) {
             this(context, null, R.attr.tabView);
+        }
+
+        public void setIconHeight(int iconHeight) {
+            this.iconHeight = iconHeight;
+        }
+
+        public void setIconPadding(int iconPadding) {
+            this.iconPadding = iconPadding;
+        }
+
+        public void setIconWidth(int iconWidth) {
+            this.iconWidth = iconWidth;
         }
 
         public TabView(Context context, AttributeSet attr, int defStyle) {
@@ -263,6 +298,8 @@ public class IconTabPageIndicator extends LinearLayout implements PageIndicator 
             TypedArray a = context.obtainStyledAttributes(attr, R.styleable.TabView, defStyle, 0);
             iconWidth = a.getDimensionPixelSize(R.styleable.TabView_iconWidth, 0);
             iconHeight = a.getDimensionPixelSize(R.styleable.TabView_iconHeight, 0);
+            iconPadding = a.getDimensionPixelSize(R.styleable.TabView_iconPadding, 0);
+            this.setCompoundDrawablePadding(iconPadding);
             this.setGravity(Gravity.CENTER);
             a.recycle();
         }
@@ -287,6 +324,7 @@ public class IconTabPageIndicator extends LinearLayout implements PageIndicator 
                 icon.setBounds(0, 0, width, height);
                 setCompoundDrawables(null, icon, null, null);
             }
+            this.setCompoundDrawablePadding(iconPadding);
         }
 
         public int getIndex() {

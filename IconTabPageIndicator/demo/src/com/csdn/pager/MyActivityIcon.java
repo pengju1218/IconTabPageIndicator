@@ -7,22 +7,21 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 
-
-import com.csdn.IconTabPageIndicator.tx.IconTabPageIndicator;
+import com.csdn.IconTabPageIndicator.icon.IconTabPageIndicator;
 import com.csdn.IconTabPageIndicator.xml.viewpagerindicator.IconPagerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class MyActivity extends FragmentActivity {
+public class MyActivityIcon extends FragmentActivity {
 
     private ViewPager mViewPager;
     private IconTabPageIndicator mIndicator;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my);
+        setContentView(R.layout.main3);
 
         initViews();
     }

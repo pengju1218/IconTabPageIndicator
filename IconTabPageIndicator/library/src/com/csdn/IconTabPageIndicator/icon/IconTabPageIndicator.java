@@ -1,4 +1,4 @@
-package com.csdn.IconTabPageIndicator.tx;
+package com.csdn.IconTabPageIndicator.icon;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -33,7 +33,7 @@ public class IconTabPageIndicator extends LinearLayout implements PageIndicator 
     private static final CharSequence EMPTY_TITLE = "";
 
 
-    private int iconWidth,iconHeight,iconPadding;
+    private int iconWidth, iconHeight, iconPadding;
 
     /**
      * Interface for a callback when the selected tab has been reselected.
@@ -51,7 +51,7 @@ public class IconTabPageIndicator extends LinearLayout implements PageIndicator 
 
     private final OnClickListener mTabClickListener = new OnClickListener() {
         public void onClick(View view) {
-            TabView tabView = (TabView) view;
+            TabLine tabView = (TabLine) view;
             final int oldSelected = mViewPager.getCurrentItem();
             final int newSelected = tabView.getIndex();
             mViewPager.setCurrentItem(newSelected, false);
@@ -71,8 +71,9 @@ public class IconTabPageIndicator extends LinearLayout implements PageIndicator 
     private OnTabReselectedListener mTabReselectedListener;
 
     private int mTabWidth;
+    private int textSize;
 
-   public IconTabPageIndicator(Context context) {
+    public IconTabPageIndicator(Context context) {
         this(context, null, R.attr.tabView);
     }
 
@@ -80,10 +81,11 @@ public class IconTabPageIndicator extends LinearLayout implements PageIndicator 
         super(context, attrs);
         setHorizontalScrollBarEnabled(false);
         mTabLayout = new LinearLayout(context, null);
-        TypedArray a =    context.obtainStyledAttributes(attrs,R.styleable.TabView);
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.TabView);
         iconWidth = a.getDimensionPixelSize(R.styleable.TabView_iconWidth, 0);
         iconHeight = a.getDimensionPixelSize(R.styleable.TabView_iconHeight, 0);
         iconPadding = a.getDimensionPixelSize(R.styleable.TabView_iconPadding, 0);
+        textSize = a.getDimensionPixelSize(R.styleable.TabView_tab_textSize, 10);
         a.recycle();
         addView(mTabLayout, new ViewGroup.LayoutParams(MATCH_PARENT, MATCH_PARENT));
 
@@ -102,6 +104,7 @@ public class IconTabPageIndicator extends LinearLayout implements PageIndicator 
         addView(mTabLayout, new ViewGroup.LayoutParams(MATCH_PARENT, MATCH_PARENT));
 
     }
+
     public void setOnTabReselectedListener(OnTabReselectedListener listener) {
         mTabReselectedListener = listener;
     }
@@ -159,12 +162,13 @@ public class IconTabPageIndicator extends LinearLayout implements PageIndicator 
     }
 
     private void addTab(int index, CharSequence text, int iconResId) {
-        final TabView tabView = new TabView(getContext());
+        final TabLine tabView = new TabLine(getContext());
         tabView.mIndex = index;
         tabView.setOnClickListener(mTabClickListener);
-        tabView.setText(text);
-        tabView.setIconHeight(iconHeight);
-        tabView.setIconWidth(iconWidth);
+        tabView.setmText(text);
+        tabView.setmTextSize(textSize);
+        //tabView.setIconHeight(iconHeight);
+        tabView.setIconWidth(iconWidth,iconHeight);
         tabView.setIconPadding(iconPadding);
 
         if (iconResId > 0) {
@@ -255,14 +259,19 @@ public class IconTabPageIndicator extends LinearLayout implements PageIndicator 
 
         final int tabCount = mTabLayout.getChildCount();
         for (int i = 0; i < tabCount; i++) {
-            final TabView child = (TabView) mTabLayout.getChildAt(i);
+            final TabLine child = (TabLine) mTabLayout.getChildAt(i);
             final boolean isSelected = (i == item);
             child.setSelected(isSelected);
             if (isSelected) {
                 child.setTextColor(Color.GREEN);
+              //  child.setIconAlpha(1.0f);
+
+
+
                 animateToTab(item);
-            }else {
-                child.setTextColor(Color.BLACK);
+            } else {
+             //   child.setIconAlpha(0.0f);
+                //child.setTextColor(Color.BLACK);
             }
         }
     }
@@ -272,7 +281,7 @@ public class IconTabPageIndicator extends LinearLayout implements PageIndicator 
         mListener = listener;
     }
 
-    private class TabView extends TextView {
+   /* private class TabView extends TextView {
         private int mIndex;
 
         private int iconWidth;
@@ -332,5 +341,5 @@ public class IconTabPageIndicator extends LinearLayout implements PageIndicator 
         public int getIndex() {
             return mIndex;
         }
-    }
+    }*/
 }

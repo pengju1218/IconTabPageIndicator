@@ -1,2 +1,2 @@
 # IconTabPageIndicator
-有xml和tx两种
+有xml和tx,tl三种

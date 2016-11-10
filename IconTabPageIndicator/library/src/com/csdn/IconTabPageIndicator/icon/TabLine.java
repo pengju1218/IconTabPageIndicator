@@ -1,6 +1,7 @@
 package com.csdn.IconTabPageIndicator.icon;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.ViewGroup;
@@ -55,6 +56,7 @@ public class TabLine extends LinearLayout {
 
         LinearLayout.LayoutParams line_params=new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT,1.0f);
         this.setLayoutParams(line_params);
+        this.setBackgroundColor(Color.parseColor("#C3c3c3"));
         this.setGravity(Gravity.CENTER_HORIZONTAL);
         imageView=new ImageView(getContext());
         LinearLayout.LayoutParams ime_param=new LinearLayout.LayoutParams(iconWidth, iconHeight);
@@ -63,7 +65,7 @@ public class TabLine extends LinearLayout {
         imageView.setLayoutParams(ime_param);
         textView.setLayoutParams(txt_param);
         this.addView(imageView);
-        this.addView(textView);
+       // this.addView(textView);
 
     }
 
@@ -73,6 +75,9 @@ public class TabLine extends LinearLayout {
     }
 
     public void setmText(CharSequence charSequence){
+        if(charSequence==null){
+            textView.setVisibility(GONE);
+        }
         textView.setText(charSequence);
         this.invalidate();
     }

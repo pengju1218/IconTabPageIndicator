@@ -21,6 +21,7 @@ import android.view.View;
 
 import com.csdn.iconpagerindicator.R;
 
+
 public class ChangeColorIconWithTextView extends View {
 
     private Bitmap mBitmap;
@@ -72,14 +73,14 @@ public class ChangeColorIconWithTextView extends View {
         for (int i = 0; i < n; i++) {
 
             int attr = a.getIndex(i);
-            if (R.styleable.ChangeColorIconView_icon == attr) {
+            if (R.styleable.ChangeColorIconView_change_icon == attr) {
                 BitmapDrawable drawable = (BitmapDrawable) a.getDrawable(attr);
                 mIconBitmap = drawable.getBitmap();
-            } else if (R.styleable.ChangeColorIconView_color == attr) {
+            } else if (R.styleable.ChangeColorIconView_change_color == attr) {
                 mColor = a.getColor(attr, 0x45C01A);
-            } else if (R.styleable.ChangeColorIconView_text == attr) {
+            } else if (R.styleable.ChangeColorIconView_change_text == attr) {
                 mText = a.getString(attr);
-            } else if (R.styleable.ChangeColorIconView_text_size == attr) {
+            } else if (R.styleable.ChangeColorIconView_change_text_size == attr) {
                 mTextSize = (int) a.getDimension(attr, TypedValue
                         .applyDimension(TypedValue.COMPLEX_UNIT_SP, 10,
                                 getResources().getDisplayMetrics()));

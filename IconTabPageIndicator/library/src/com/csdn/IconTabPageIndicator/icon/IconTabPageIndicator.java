@@ -265,13 +265,10 @@ public class IconTabPageIndicator extends LinearLayout implements PageIndicator 
             if (isSelected) {
                 child.setTextColor(Color.GREEN);
               //  child.setIconAlpha(1.0f);
-
-
-
                 animateToTab(item);
             } else {
              //   child.setIconAlpha(0.0f);
-                //child.setTextColor(Color.BLACK);
+                child.setTextColor(Color.BLACK);
             }
         }
     }

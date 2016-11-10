@@ -12,10 +12,10 @@
 
 
     <declare-styleable name="ChangeColorIconView">
-        <attr name="icon" format="reference" />
-        <attr name="color" format="color" />
-        <attr name="text" format="string" />
-        <attr name="text_size" format="dimension" />
+        <attr name="change_icon" format="reference" />
+        <attr name="change_color" format="color" />
+        <attr name="change_text" format="string" />
+        <attr name="change_text_size" format="dimension" />
     </declare-styleable>
 
 
